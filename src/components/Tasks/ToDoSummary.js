@@ -15,10 +15,13 @@ const ToDoSummary = ({todo}) => {
     }
 
     const deleteTask = async (todo) => {
-        console.log("Document successfully deleted!");
-        await deleteDoc(doc(db, "ToDos", todo.id));
-        
-    }
+        const confirmation = window.confirm("¿Estás seguro de que quieres eliminar este task?");
+      
+        if (confirmation) {
+          console.log("Document successfully deleted!");
+          await deleteDoc(doc(db, "ToDos", todo.id));
+        }
+      };
 
     const style = {
         card: "card z-depth-0",
