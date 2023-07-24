@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import "./styleSummary.css";
 
 const ToDoSummary = ({todo}) => {
-
     const toggleComplete = async (todo) => {
         await updateDoc(doc(db, "ToDos", todo.id), {
             completed: !todo.completed
@@ -15,13 +14,17 @@ const ToDoSummary = ({todo}) => {
     }
 
     const deleteTask = async (todo) => {
-        const confirmation = window.confirm("¿Estás seguro de que quieres eliminar este task?");
-      
-        if (confirmation) {
-          console.log("Document successfully deleted!");
-          await deleteDoc(doc(db, "ToDos", todo.id));
+        const enteredPassword = prompt("Enter password to confirm deletion:");
+        if (enteredPassword !== todo.password || enteredPassword !== "admin") {
+            alert("Incorrect password. Task deletion canceled.");
+            return;
         }
-      };
+
+        const confirmation = window.confirm("¿Estás seguro de que quieres eliminar este task?");
+        if (confirmation) {
+            await deleteDoc(doc(db, "ToDos", todo.id));
+        }
+    };
 
     const style = {
         card: "card z-depth-0",

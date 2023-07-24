@@ -6,7 +6,6 @@ import { GlobalContext } from "../../context/GlobalContext";
 import { Link } from "react-router-dom";
 
 const EditTask = () => {
-
     const { characterCounter } = useContext(GlobalContext);  
     const { id } = useParams();
     const [todo, setTodo] = useState({});
