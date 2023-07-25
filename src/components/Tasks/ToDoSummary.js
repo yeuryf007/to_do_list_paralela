@@ -1,5 +1,5 @@
 import { doc, updateDoc, deleteDoc } from "firebase/firestore";
-import React from "react";
+import React, { useState } from "react"; // Import useState
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { db } from "../../Firebase";
@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import "./styleSummary.css";
 
 const ToDoSummary = ({todo}) => {
+
     const toggleComplete = async (todo) => {
         await updateDoc(doc(db, "ToDos", todo.id), {
             completed: !todo.completed
@@ -14,14 +15,29 @@ const ToDoSummary = ({todo}) => {
     }
 
     const deleteTask = async (todo) => {
-        const enteredPassword = prompt("Enter password to confirm deletion:");
-        if (enteredPassword !== todo.password || enteredPassword !== "admin") {
-            alert("Incorrect password. Task deletion canceled.");
-            return;
+        if (todo.pass) {
+            // If the task has a password, prompt for it
+            const enteredPassword = prompt("Enter the task password to confirm deletion:");
+
+            if (enteredPassword !== todo.pass) {
+                alert("Incorrect password. Task deletion canceled.");
+                return;
+            }
+        } else {
+            // If there's no password, prompt for admin password
+            const enteredAdminPassword = prompt("Enter the admin password to confirm deletion:");
+
+            // Replace "your_admin_password" with the actual admin password
+            if (enteredAdminPassword !== "admin") {
+                alert("Incorrect admin password. Task deletion canceled.");
+                return;
+            }
         }
 
         const confirmation = window.confirm("¿Estás seguro de que quieres eliminar este task?");
+      
         if (confirmation) {
+            console.log("Document successfully deleted!");
             await deleteDoc(doc(db, "ToDos", todo.id));
         }
     };
