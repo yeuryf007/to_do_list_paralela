@@ -1,11 +1,6 @@
 # To-Do-List-Yeury-Paula
 A to-do list just like any other one.
 
-## Preview
->Aplication preview (render): [Todo List Preview](https://todo-list-paralela.onrender.com)
-
-**pd:** The render server is a little bit slow, on its first load it may take up to a minute.
-
 ## Instructions
 1. Clone the repository.
 2. Open the terminal and go to the project folder.
